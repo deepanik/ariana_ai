@@ -52,6 +52,5 @@ const TextToImage: React.FC = () => {
     </div>
   );
 };
-// hii
 
 export default TextToImage;
