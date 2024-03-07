@@ -1,14 +1,15 @@
 "use client"
-
-import React from 'react';
-import TextToImage from '../components/TextToImage';
-import GenImage from '../components/genImage';
+import React, { useState } from 'react';
+import DisplayImage from '../components/DisplayImage';
+import SearchImage from '../components/SearchImage'; // Adjust the import path
 
 const Home = () => {
+  const [inputText, setInputText] = useState<string>('');
+
   return (
     <div>
-      <TextToImage />
-      <GenImage />
+      <DisplayImage />
+      <SearchImage />
     </div>
   );
 };
