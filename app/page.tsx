@@ -1,15 +1,15 @@
+// pages/index.tsx
 "use client"
-import React, { useState } from 'react';
-import DisplayImage from '../components/DisplayImage';
-import SearchImage from '../components/SearchImage'; // Adjust the import path
+import React from 'react';
+import SearchImage from '../components/SearchImage';
 
-const Home = () => {
-  const [inputText, setInputText] = useState<string>('');
+const Home: React.FC = () => {
 
   return (
     <div>
-      <DisplayImage />
+      {/* ... other components or content */}
       <SearchImage />
+      {/* ... other components or content */}
     </div>
   );
 };

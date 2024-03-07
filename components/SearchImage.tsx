@@ -1,20 +1,12 @@
-// SearchImage.tsx
+// components/SearchImage.tsx
 import React, { useState, useEffect } from 'react';
 import { GiStarsStack } from 'react-icons/gi';
-import { query } from '../api/api'; // Adjust the path as needed
+import { query } from '../api/api';
 
-interface SearchImageProps {
-  setInputText: React.Dispatch<React.SetStateAction<string>>;
-  setImageSrc: React.Dispatch<React.SetStateAction<string | null>>;
-  setError: React.Dispatch<React.SetStateAction<string | null>>;
-}
-
-const SearchImage: React.FC<SearchImageProps> = ({ setInputText, setImageSrc, setError }) => {
+const SearchImage: React.FC = () => {
+  const [inputText, setInputText] = useState<string>('');
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [localError, setLocalError] = useState<string | null>(null);
-
-  const loadDefaultImage = () => {
-    setImageSrc(null);
-  };
 
   const handleGenerateAI = async () => {
     try {
@@ -27,8 +19,6 @@ const SearchImage: React.FC<SearchImageProps> = ({ setInputText, setImageSrc, se
       setLocalError('Failed to generate AI. Please try again later.');
     }
   };
-  
-  
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -37,11 +27,22 @@ const SearchImage: React.FC<SearchImageProps> = ({ setInputText, setImageSrc, se
   };
 
   useEffect(() => {
-    if (!imageSrc || localError) {
-      loadDefaultImage();
-    }
-  }, [imageSrc, localError]);
-  
+    const fetchData = async () => {
+      if (!imageSrc && !localError) {
+        try {
+          const imageUrl = await query({ inputs: inputText, numImages: 1 });
+          setImageSrc(imageUrl);
+          setLocalError(null);
+        } catch (error) {
+          console.error('Error generating AI:', (error as Error).message);
+          setImageSrc(null);
+          setLocalError('Failed to generate AI. Please try again later.');
+        }
+      }
+    };
+
+    fetchData();
+  }, [imageSrc, localError, inputText]);
 
   return (
     <div className="max-w-4xl mx-auto mb-8 bg-white p-8 rounded-md shadow-md">
@@ -49,7 +50,6 @@ const SearchImage: React.FC<SearchImageProps> = ({ setInputText, setImageSrc, se
         <input
           type="text"
           placeholder="Generate AI"
-          value={inputText}
           onChange={(e) => setInputText(e.target.value)}
           onKeyDown={handleKeyDown}
           className="flex-grow bg-transparent border-none text-white px-4 focus:outline-none"
@@ -63,7 +63,7 @@ const SearchImage: React.FC<SearchImageProps> = ({ setInputText, setImageSrc, se
         </button>
       </div>
 
-      {imageSrc ? (
+      {imageSrc && (
         <div className="mt-8">
           <img
             src={imageSrc}
@@ -71,17 +71,12 @@ const SearchImage: React.FC<SearchImageProps> = ({ setInputText, setImageSrc, se
             className="mx-auto max-w-full h-auto rounded-md shadow-md"
           />
         </div>
-      ) : (
-        localError && (
-          <div className="mt-8">
-            <img
-              src="https://images.unsplash.com/photo-1578632749014-ca77efd052eb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt="Generated AI"
-              className="mx-auto max-w-full h-auto rounded-md shadow-md"
-            />
-            <p className="mt-4 text-red-500">{localError}</p>
-          </div>
-        )
+      )}
+
+      {localError && (
+        <div className="mt-8">
+          <p className="text-red-500">{localError}</p>
+        </div>
       )}
     </div>
   );
