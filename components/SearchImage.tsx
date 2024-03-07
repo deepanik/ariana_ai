@@ -72,10 +72,21 @@ const SearchImage: React.FC<SearchImageProps> = ({ setError }) => {
 
       const newImage = { url: imageUrl, id: Date.now() };
 
-      setPreviousImages((prevImages) => [
-        newImage,
-        ...(currentImage ? [currentImage, ...prevImages.slice(0, 2)] : prevImages.slice(0, 2)),
-      ]);
+      setPreviousImages((prevImages) => {
+        const updatedImages = [
+          newImage,
+          ...(currentImage ? [currentImage, ...prevImages.slice(0, 2)] : prevImages.slice(0, 2)),
+        ];
+      
+        // Remove duplicate images based on id
+        const uniqueImages = Array.from(new Set(updatedImages.map((image) => image.id)))
+          .map((id) => updatedImages.find((image) => image.id === id))
+          .filter((image) => image !== undefined) as ImageData[];
+      
+        return uniqueImages;
+      });
+      
+      
       setCurrentImage(newImage);
       setLocalError(null);
     } catch (error) {
@@ -188,13 +199,14 @@ const SearchImage: React.FC<SearchImageProps> = ({ setError }) => {
                 src={currentImage.url}
                 alt={`Generated AI Image - ${currentImage.id}`}
                 className="object-cover rounded-md"
-                style={{ maxWidth: '100%', maxHeight: '100%' }}
+                style={{ maxWidth: '100%', maxHeight: '300px' }}
               />
               <div className="absolute bottom-0 left-0 right-0 flex justify-center items-center p-2 bg-gray-800 rounded-b-md">
                 <FaDownload
                   size={20}
                   className="text-white hover:text-blue-500 cursor-pointer"
                   onClick={() => handleDownload(currentImage.url)}
+                  style={{ maxWidth: '300px'}}
                 />
               </div>
             </div>
