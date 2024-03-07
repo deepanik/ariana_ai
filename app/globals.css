@@ -27,10 +27,48 @@
 /* Image Genrating Button CSS */
 
 /* CSS */
-.inputHover:hover{
-  /* hover:border-pink-700 focus:bg-blue-500 */
-  border: pink;
+.telwind-radio.check {
+  display: none;
 }
-.inputHover:focus{
-  border: pink;
+
+/* Add new styles for the ApiSelector component */
+.api-selector {
+  display: flex;
+  gap: 20px;
+}
+
+.api-selector .label {
+  display: flex;
+}
+
+.api-selector .label .check {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+  border: 3px solid transparent;
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5),
+   -1px -1px 4px rgba(255, 255, 255, 0.5);
+}
+
+.api-selector .label input:checked + .check {
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5),
+   -1px -1px 4px rgba(255, 255, 255, 0.5),
+   inset 3px 3px 6px rgba(0, 0, 0, 0.5),
+   inset -1px -1px 4px rgba(255, 255, 255, 0.5);
+  transform: scale(1.1);
+}
+
+
+
+.radio-input .label input:checked + .check {
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5),
+   -1px -1px 4px rgba(255, 255, 255, 0.5),
+   inset 3px 3px 6px rgba(0, 0, 0, 0.5),
+   inset -1px -1px 4px rgba(255, 255, 255, 0.5);
+  transform: scale(1.1);
 }
