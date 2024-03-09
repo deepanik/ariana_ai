@@ -1,28 +1,24 @@
 // components/ImageDisplay.tsx
 import React from 'react';
+import Image from 'next/image';
 
 interface ImageDisplayProps {
-  currentImage: string | null;
-  previousImages?: string[]; // Make previousImages optional
+  imageUrl: string;
+  altText: string;
 }
 
-const ImageDisplay: React.FC<ImageDisplayProps> = ({ currentImage, previousImages = [] }) => {
+const ImageDisplay: React.FC<ImageDisplayProps> = ({ imageUrl, altText }) => {
   return (
-    <div className="flex flex-col items-center mt-8">
-      {/* Display current generated image */}
-      {currentImage && (
-        <div className="mb-4">
-          <img src={currentImage} alt="Current Generated AI" className="rounded-md shadow-md" width={360} height={360} />
-        </div>
-      )}
-
-      {/* Display last four previous generated images in a size of 200x200 */}
-      <div className="flex justify-center">
-        {previousImages.slice(0, 4).map((prevImage, index) => (
-          <div key={index} className="m-2">
-            <img src={prevImage} alt={`Previous Generated AI ${index + 1}`} className="rounded-md shadow-md" width={200} height={200} />
-          </div>
-        ))}
+    <div className="relative overflow-hidden mb-4 flex items-center justify-center max-w-360 max-h-360 mx-auto">
+      {/* Replace <img> with <Image /> */}
+      <Image
+        src={imageUrl}
+        alt={altText}
+        className="object-cover rounded-md"
+        layout="fill" // This ensures the image takes up the full container
+      />
+      <div className="absolute bottom-0 left-0 right-0 flex justify-center items-center p-2 bg-gray-800 rounded-b-md">
+        {/* Add your download button or any other content */}
       </div>
     </div>
   );

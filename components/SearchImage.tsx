@@ -1,21 +1,31 @@
 // components/SearchImage.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FaDownload, FaImage } from 'react-icons/fa';
 import { query } from '../api/api';
 import ApiSelector from './ApiSelector';
 import { GiFallingStar } from "react-icons/gi";
+// import Image from 'next/image';
 
 
+
+// SearchImageProps
 interface SearchImageProps {
   setError: React.Dispatch<React.SetStateAction<string | null>>;
+  selectedApi: string;
 }
 
+
+// ImageData Info
 interface ImageData {
   url: string;
   id: number;
 }
 
+
+// Update the ApiSelector component with the correct initial selected API
+
 const SearchImage: React.FC<SearchImageProps> = ({ setError }) => {
+    // console.log('selectedApi:', selectedApi);
   const [inputText, setInputText] = useState<string>('');
   const [currentImage, setCurrentImage] = useState<ImageData | null>(null);
   const [previousImages, setPreviousImages] = useState<ImageData[]>([]);
@@ -25,26 +35,30 @@ const SearchImage: React.FC<SearchImageProps> = ({ setError }) => {
   const [progress, setProgress] = useState<number>(0);
 
   let intervalId: NodeJS.Timeout;
+<ApiSelector selectedApi={selectedApi} onApiChange={setSelectedApi} />
+
+
 
   const loadDataFromDatabase = async () => {
     // Simulate fetching data from a database
-    const response = await fetch('/data/images.json');
+    const response = await fetch('../data/images.json');
     const data = await response.json();
     setCurrentImage(data.currentImage);
     setPreviousImages(data.previousImages);
   };
 
-  const saveDataToDatabase = () => {
+  const saveDataToDatabase = useCallback(() => {
     // Simulate saving data to a database
     const data = { currentImage, previousImages };
-    fetch('/data/images.json', {
+    fetch('../data/images.json', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
     });
-  };
+  }, [currentImage, previousImages]);
+
 
   const handleGenerateAI = async () => {
     try {
@@ -63,7 +77,7 @@ const SearchImage: React.FC<SearchImageProps> = ({ setError }) => {
 
       const imageUrl = await query({
         inputs: inputText,
-        api: selectedApi,
+        api: selectedApi, // Ensure that selectedApi is correctly set here
         onProgress: (loaded, total) => {
           const calculatedProgress = (loaded / total) * 95;
           setProgress(calculatedProgress);
@@ -101,6 +115,9 @@ const SearchImage: React.FC<SearchImageProps> = ({ setError }) => {
     }
   };
 
+  
+
+
   const handleDownload = (imageUrl: string) => {
     // Create a temporary anchor element
     const downloadLink = document.createElement('a');
@@ -134,7 +151,9 @@ const SearchImage: React.FC<SearchImageProps> = ({ setError }) => {
   useEffect(() => {
     // Save data to the database whenever it changes
     saveDataToDatabase();
-  }, [currentImage, previousImages]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentImage, previousImages, saveDataToDatabase]);
+  
 
   useEffect(() => {
     if (!currentImage || localError) {
@@ -195,12 +214,15 @@ const SearchImage: React.FC<SearchImageProps> = ({ setError }) => {
         <div className="mt-4">
           {currentImage ? (
             <div className="relative overflow-hidden mb-4 flex items-center justify-center max-w-360 max-h-360 mx-auto">
+              
               <img
                 src={currentImage.url}
                 alt={`Generated AI Image - ${currentImage.id}`}
                 className="object-cover rounded-md"
                 style={{ maxWidth: '100%', maxHeight: '300px' }}
               />
+
+
               <div className="absolute bottom-0 left-0 right-0 flex justify-center items-center p-2 bg-gray-800 rounded-b-md">
                 <FaDownload
                   size={20}
@@ -233,6 +255,7 @@ const SearchImage: React.FC<SearchImageProps> = ({ setError }) => {
                 </div>
               </div>
             ))}
+            
           </div>
         </div>
       </div>

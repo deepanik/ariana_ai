@@ -1,18 +1,17 @@
 // api/api.ts
-
-// Define configuration for different APIs
 const API_CONFIG: Record<string, string> = {
   Hugging_face_API: "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",
   Hugging_face_Fetch_Link: "https://api-inference.huggingface.co/models/SaiRaj03/Text_To_Image",
-  Open_AI_API: "your_open_ai_token", // Replace with your Open AI token
-  Open_AI_Fetch_Link: "https://api.openai.com/v1/your/endpoint", // Replace with your Open AI endpoint
-  // Add more API configurations as needed
+  Open_AI_API: "your_open_ai_token",
+  Open_AI_Fetch_Link: "https://api.openai.com/v1/your/endpoint",
+  Stability_API: "your_stability_api_key",
+  Stability_API_Fetch_Link: "https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/image-to-image",
 };
 
 interface QueryData {
   inputs: string;
-  api: keyof typeof API_CONFIG; // Use keyof to ensure the correct API key
-  onProgress?: (loaded: number, total: number) => void; // Add onProgress property
+  api: keyof typeof API_CONFIG;
+  onProgress?: (loaded: number, total: number) => void; 
 }
 
 export const query = async (data: QueryData): Promise<string> => {
@@ -38,7 +37,7 @@ export const query = async (data: QueryData): Promise<string> => {
 
     const result = await response.blob();
     return URL.createObjectURL(result);
-  } catch (error) {
+  } catch (error: any) {
     console.error(`Error querying the API: ${error.message}`);
     throw error;
   }

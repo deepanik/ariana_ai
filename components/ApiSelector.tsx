@@ -1,3 +1,5 @@
+// ApiSelector.tsx
+
 import React from 'react';
 
 interface ApiSelectorProps {
@@ -9,6 +11,7 @@ const ApiSelector: React.FC<ApiSelectorProps> = ({ selectedApi, onApiChange }) =
   const apiOptions = [
     { id: 'api-hugging-face', value: 'Hugging_face', label: 'Hugging Face' },
     { id: 'api-open-ai', value: 'Open_AI', label: 'Open AI' },
+    { id: 'api-stablity-ai', value: 'Stablity', label: 'Stablity AI' },
   ];
 
   return (
@@ -35,4 +38,5 @@ const ApiSelector: React.FC<ApiSelectorProps> = ({ selectedApi, onApiChange }) =
     </div>
   );
 };
+
 export default ApiSelector;
