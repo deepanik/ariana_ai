@@ -2,7 +2,7 @@
 "use client"
 import React, { useState } from 'react';
 import SearchImage from '../components/SearchImage';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/navbar';
 
 const Home: React.FC = () => {
   const [selectedApi, setSelectedApi] = useState<string>('Hugging Face');

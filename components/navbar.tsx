@@ -1,7 +1,7 @@
 // components/navbar.tsx
 import React, { useState } from 'react';
 import Image from 'next/image'; // Import the Image component from next/image
-import Logo from '../public/next.svg'; 
+import Logo from '../public/logo-anime.svg'; 
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,12 +20,11 @@ const Navbar: React.FC = () => {
           alt="Logo"
           className="h-12 w-12 rounded-full mr-4"
           width={48} // Set the width of the image
-          height={48} // Set the height of the image
+          height={48} 
         />
         <span className="text-2xl font-serif font-semibold text-white">ARIANA AI</span>
       </div>
 
-      {/* Burger menu for small screens */}
       <div className="md:hidden">
         <button
           className="text-white focus:outline-none"

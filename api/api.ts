@@ -2,10 +2,11 @@
 const API_CONFIG: Record<string, string> = {
   Hugging_face_API: "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",
   Hugging_face_Fetch_Link: "https://api-inference.huggingface.co/models/SaiRaj03/Text_To_Image",
-  Open_AI_API: "your_open_ai_token",
-  Open_AI_Fetch_Link: "https://api.openai.com/v1/your/endpoint",
-  Stability_API: "your_stability_api_key",
-  Stability_API_Fetch_Link: "https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/image-to-image",
+  Open_AI_API: "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",
+  Open_AI_Fetch_Link: "https://api.openai.com/v1/chat/completions",
+  // Stability_API: "your_stability_api_key",
+  // Stability_API_Fetch_Link: "https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/image-to-image",
+  
 };
 
 interface QueryData {

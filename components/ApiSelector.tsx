@@ -11,7 +11,7 @@ const ApiSelector: React.FC<ApiSelectorProps> = ({ selectedApi, onApiChange }) =
   const apiOptions = [
     { id: 'api-hugging-face', value: 'Hugging_face', label: 'Hugging Face' },
     { id: 'api-open-ai', value: 'Open_AI', label: 'Open AI' },
-    { id: 'api-stablity-ai', value: 'Stablity', label: 'Stablity AI' },
+    // { id: 'api-stablity-ai', value: 'Stablity', label: 'Stablity AI' },
   ];
 
   return (
