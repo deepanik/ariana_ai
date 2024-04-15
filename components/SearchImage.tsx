@@ -3,10 +3,17 @@ import { FaDownload, FaImage } from 'react-icons/fa';
 import { query } from '../api/api';
 import ApiSelector from './ApiSelector';
 import { GiFallingStar } from 'react-icons/gi';
+import Image from 'next/image';
+
+// interface SearchImageProps {
+//   setError: React.Dispatch<React.SetStateAction<string | null>>;
+// }
 
 interface SearchImageProps {
   setError: React.Dispatch<React.SetStateAction<string | null>>;
+  selectedApi: string; // Add selectedApi prop
 }
+
 
 interface ImageData {
   url: string;
@@ -107,7 +114,7 @@ const handleDownload = async (imageUrl: string) => {
           {currentImage ? (
             <div className="relative overflow-hidden mb-4 flex items-center justify-center max-w-360 max-h-360 mx-auto">
               {/* Display current image */}
-              <img
+              <Image
                 src={currentImage.url}
                 alt={`Generated AI Image - ${currentImage.id}`}
                 className="object-cover rounded-md"
@@ -135,7 +142,7 @@ const handleDownload = async (imageUrl: string) => {
             {/* Display previous images */}
             {previousImages.map((image) => (
               <div key={image.id} className="relative overflow-hidden w-full md:w-1/4 h-48 md:h-1/4 rounded-md">
-                <img
+                <Image
                   src={image.url}
                   alt={`Generated AI Image - ${image.id}`}
                   className="w-full h-full object-cover rounded-md"

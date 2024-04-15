@@ -13,10 +13,10 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 relative">
+    <div className="min-h-screen bg-gray-900 relative">
       <Navbar />
       <div className="container mx-auto p-4 sm:p-8 md:p-12 lg:p-16">
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold mb-6 text-center">AI Image Generator</h1>
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold mb-6 text-center">Ariana [AI]</h1>
         <SearchImage setError={setError} selectedApi={selectedApi} />
       </div>
     </div>
