@@ -1,26 +1,21 @@
 // app/page.tsx
 "use client"
 import React, { useState } from 'react';
-import SearchImage from '../components/SearchImage';
-import Navbar from '../components/navbar';
+import SearchImage from '@/components/SearchImage';
+import Navbar from '@/components/navbar';
 
-const Home: React.FC = () => {
-  const [selectedApi, setSelectedApi] = useState<string>('Hugging Face');
+export default function Home() {
   const [error, setError] = useState<string | null>(null);
 
-  const handleApiChange = (api: string) => {
-    setSelectedApi(api);
-  };
-
   return (
-    <div className="min-h-screen bg-gray-900 relative">
+    <main className="min-h-screen bg-[#0A0A0A]">
       <Navbar />
-      <div className="container mx-auto p-4 sm:p-8 md:p-12 lg:p-16">
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold mb-6 text-center">Ariana [AI]</h1>
-        <SearchImage setError={setError} selectedApi={selectedApi} />
-      </div>
-    </div>
+      <SearchImage setError={setError} />
+      {error && (
+        <div className="fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg">
+          {error}
+        </div>
+      )}
+    </main>
   );
-};
-
-export default Home;
+}
